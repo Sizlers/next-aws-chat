@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-testchat-staging-125036-authRole",
+      "UnauthRoleArn": "arn:aws:iam::666642133268:role/amplify-testchat-staging-125036-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::666642133268:role/amplify-testchat-staging-125036-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-testchat-staging-125036-deployment",
+      "UnauthRoleName": "amplify-testchat-staging-125036-unauthRole",
+      "StackName": "amplify-testchat-staging-125036",
+      "StackId": "arn:aws:cloudformation:us-west-2:666642133268:stack/amplify-testchat-staging-125036/dfd290a0-84c3-11eb-819e-0afc3b6c9c9d",
+      "AmplifyAppId": "du6ie88qtgv1l"
+    }
+  }
+}

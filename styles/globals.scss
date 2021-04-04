@@ -1,0 +1,207 @@
+:root {
+  //font sizes
+  --small-fs: 3vw;
+  --normal-fs: 4vw;
+  --xl-fs: 10vw;
+  @media screen and (min-width: 768px) {
+    --normal-fs: 3vw;
+    --xl-fs: 7.5vw;  
+  }
+  @media screen and (min-width: 1024px) {
+    --small-fs: 1.5vw;
+    --normal-fs: 1.5vw;
+    --xl-fs: 5vw;  
+  }
+  @media screen and (min-width: 1280px) {
+    --small-fs: 1vw;
+    --normal-fs: 1.5vw;
+    --xl-fs: 4vw;  
+  }
+  // theme colour
+  --main-colour: #2A3FD6;
+  --main-grey-one: #A8B6D4;
+  --main-grey-two: #6F92C5;
+  --grey: #EFF2F9;
+  --black: #090B12;
+  --black-grey: hsla(0, 0%, 0%, 0.8);
+  --black-grey1: #4A4654;
+  --warning: #C14E49;
+
+  //weird stuff
+  --home-content-transform: rotate(45deg) translate(-50%, -50%); 
+  --home-content-left: 50%;    
+  @media screen and (min-width: 1024px) {
+    --home-content-transform: rotate(45deg) translate(-50%, 50%); 
+    --home-content-left: 10%;  
+  }
+}
+h1 {
+  font-size: var(--xl-fs);
+  text-align: center;
+  font-weight: 700;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: 2vw;
+}
+
+p {
+  font-weight: 300;
+  color: var(--black-grey);
+  font-size: var(--normal-fs);
+  margin-bottom: 1vw;
+}
+
+fieldset {
+  width: 100%;
+  background-color: var(--grey);
+  padding: 2vw 4vw;
+  margin: 0;
+  border: 2px solid var(--back-grey);
+  label {
+    font-size: var(--normal-fs);
+    display: block;
+    font-weight: 500;
+    font-style: italic;
+    input {
+      margin-top: 1vw;
+      padding: 1vw;
+      width: 100%;
+      border: 1px solid var(--main-grey-one);
+      outline: none;
+      height: 6vw;
+      font-size: var(--small-fs);
+      &::placeholder {
+        font-size: var(--small-fs);
+      }
+      @media(min-width: 1536px) {
+        height: 4vw;
+      }
+    }
+  }
+  button {
+    margin-top: 1vw;
+    @media(min-width: 1536px) {
+      margin-top: 1.3vw;
+    }
+  }
+}
+
+button {
+  font-weight: 700;
+  color: #fff;
+  padding: 1vw;
+  background: var(--main-colour);
+  font-size: var(--small-fs);
+  @media(min-width: 1536px) {
+    padding: 0.75vw 1.5vw;
+  }
+  &.btn-large {
+    transform: scale(2);
+  }
+
+  &.btn-white {
+    color: var(--main-colour);
+    background: #FFF;
+  }
+}
+
+.home-content-container {
+  @media screen and (min-width: 1024px) {
+    overflow: hidden;
+  }
+  position: relative;
+  h1 {
+    color: #000;
+  }
+  p {
+    color: #000;
+  }
+  .home-content {
+    width: 100%;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: --var(--home-content-left);
+      height: 100vh;
+      width: 100vh;
+      background-color: #d5c029;
+      transform: var(--home-content-transform);     
+      z-index: -1;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: --var(--home-content-left);
+      height: 100vh;
+      width: 100vh;
+      background-color: #FFF;
+      transform: var(--home-content-transform);
+      mix-blend-mode: difference; 
+    }    
+  }
+}
+.inset-center-y {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.inset-center-x {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+// .blue-split {
+//   button {
+//     z-index: 1;
+//   }
+//   &::before {
+//     content: '';
+//     position: absolute;
+//     top: 0;
+//     height: 100%;
+//     width: 50%;
+//     background-color: #d5c029; 
+//     z-index: -1;
+//   }
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     top: 0;
+//     height: 100%;
+//     width: 50%;
+//     background-color: #FFF;
+//     mix-blend-mode: difference; 
+//   }
+// }
+
+table {
+  th {
+    padding: 1vw;
+    background-color: var(--main-colour);
+    color: #FFF;
+    font-size: var(--normal-fs);
+    text-align: left;
+  }
+  tr {
+    text-align: left;
+  }
+  tr {
+    button {
+      display: block;
+      margin-left: auto;
+    }
+  }
+}
+
+.message-list {
+  background-color: var(--grey);
+  width: 100%;
+  margin: 0 4vw;
+  padding: 2vw 4vw;
+  overflow: scroll;
+  max-height: 90vh;
+}

@@ -1,0 +1,20 @@
+type User @model @auth(rules: [{allow: public}]) @key(name: "byRoom", fields: ["roomID"]) {
+  id: ID!
+  username: String
+  roomID: ID
+}
+
+type Message @model @auth(rules: [{allow: public, operations: [create, read]}]) @key(name: "byRoom", fields: ["roomID"]) {
+  id: ID!
+  content: String
+  timestamp: AWSTimestamp
+  author: String
+  roomID: ID
+}
+
+type Room @model @auth(rules: [{allow: public, operations: [create, read]}]) {
+  id: ID!
+  Messages: [Message] @connection(keyName: "byRoom", fields: ["id"])
+  Users: [User] @connection(keyName: "byRoom", fields: ["id"])
+}
+ 
