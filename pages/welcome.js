@@ -35,20 +35,32 @@ export default function Welcome() {
 
   return (
     <>
-      <main className="grid grid-cols-2 min-h-screen split-screen">
-        <div className="inset-center-x top-20">
-          <h1>Hi, {username} <br />do you want to</h1>
+      <main className="min-h-screen">
+        <div className="pt-20">
+          <h1 className="text-center">Hi, {username} <br />do you want to...</h1>
           {error}
         </div>
-        <Link href="/welcome/join-room">
-          <div className="flex items-center justify-center blue-split">
-            <button className="btn-large btn-white">Join a room</button>
-          </div>
-        </Link>
 
-        <div onClick={handleCreateRoom} className="flex items-center justify-center">
-          <button className="btn-large">Create a room</button>
-        </div>
+        <section className="
+          grid
+          grid-cols-1 grid-rows-2 min-h-full absolute top-0 w-full py-36
+          lg:grid-cols-2 lg:grid-rows-1
+          ">
+
+          <div className="
+          bg-gray-300 absolute inset-center 
+            h-0.5  w-2/3
+            lg:w-0.5 lg:h-1/3
+          "></div>
+          <div className="flex justify-center items-center col-span-1">
+              <Link href="/welcome/join-room">
+                <button className="btn-large btn-white">Join a room</button>
+              </Link>
+          </div>
+          <div className="flex justify-center items-center col-span-1">
+            <button className="btn-large" onClick={handleCreateRoom} >Create a room</button>
+          </div>
+        </section>
       </main>
 
       <footer className="absolute bottom-20 width w-full flex justify-center">

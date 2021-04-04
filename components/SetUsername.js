@@ -7,17 +7,38 @@ export default function SetUsername() {
   const { values, updateValue } = useForm({
     username: ''
   });
+  const [error, setError] = useState('');
 
   const handleSetUsername = () => {
-    setUsername(values.username)
+    if(values.username !== '') {
+      setUsername(values.username)
+    } else {
+      setError('Please enter a username.')
+      console.log('test')
+    }
   }
   return (
-    <fieldset>
-      <label htmlFor="username" >
-        Username
-        <input type="text" id="username" name="username" placeholder="notacat108" value={values.usernameCreate} onChange={updateValue} />
-      </label>
-      <button onClick={handleSetUsername}>Confirm</button>
-    </fieldset>
+    <>
+      {
+        error && <span className="error">{error}</span>
+      }
+      <fieldset>
+        <label htmlFor="username"  className="block">
+          Username
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="notacat108" 
+            value={values.usernameCreate} 
+            onChange={updateValue} 
+            className="w-full"
+          />
+        </label>
+        <button onClick={handleSetUsername}
+          className="mt-5"
+        >Confirm</button>
+      </fieldset>
+    </>
   )
 }
