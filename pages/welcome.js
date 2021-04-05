@@ -66,7 +66,6 @@ export default function Welcome() {
       <footer className="absolute bottom-20 width w-full flex justify-center">
         <button onClick={handleBackToStart}>Back to start</button>
       </footer>
-
     </>
   )
 }

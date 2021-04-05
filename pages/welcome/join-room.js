@@ -16,7 +16,11 @@ export default function JoinRoom() {
   const handleJoinRoom = async (roomId) => {
     try {
       const room = await DataStore.query(Room, (r) => r.id('eq', roomId));
-      Router.push(`/rooms/${roomId}`)
+      if(room.length === 0) {
+        setError('Room not found, please enter another room id, or create a room.');
+      } else {
+        Router.push(`/rooms/${roomId}`)
+      }
     } catch (err) {
       setError(`An error has occurred, please try again. ${err}`)
     }
@@ -50,48 +54,55 @@ export default function JoinRoom() {
   }, [])
 
   return (
-    <div>
-      <h1 className="mt-20">Join a Room</h1>
-      {error}
-
-      <div className="max-w-screen-xl m-auto mb-20">
+    <>
+      <div className="mb-10 px-5 xl:px-0 max-w-screen-xl m-auto lg:mb-20">
+        <h1 className="mt-12 mb-6 lg:mt-20 lg:mb-10">Join a Room</h1>
         <fieldset>
-          <label htmlFor="RoomId">
-            Room ID
-            <input id="RoomId" type="text" name="roomId" value={values.roomId} onChange={updateValue} />
-          </label>
-          <button type="submit" onClick={() => handleJoinRoom(values.roomId)}>
-            Enter ->
-          </button>
+          <div className="lg:flex items-end">
+            <label htmlFor="RoomId" className="w-full">
+              Room ID
+              <span class="error block">{error}</span>
+              <input id="RoomId" type="text" name="roomId" className="lg:h-20" value={values.roomId} onChange={updateValue} />
+            </label>
+            <button type="submit" className="w-full mt-2 lg:mt-0 lg:w-40 lg:h-20" onClick={() => handleJoinRoom(values.roomId)}>
+              Join Room
+            </button>
+          </div>
+
         </fieldset>
       </div>
-      { roomList.length > 0 &&
-        <table className="w-full max-w-screen-xl m-auto">
-          <thead>
-            <tr>
-              <th>Room ID</th>
-              <th>User Count</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              roomList.map(room => (
-                <tr key={room.roomId}>
-                  <td>{room.roomId}</td>
-                  <td>{room.userCount}</td>
-                  <td><button onClick={() => handleJoinRoom(room.roomId)}>Join Room</button></td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      }
-      <footer className="pb-20 pt-20 width w-full flex justify-center">
+      <div className="px-5">
+        { roomList.length > 0 &&
+          <table className="max-w-screen-xl mx-auto text-left w-full">
+            <thead className="flex w-full">
+              <tr className="flex w-full">
+                <th className="p-4 w-2/3 lg:3/5">Room ID</th>
+                <th className="hidden md:block p-4 w-1/3 lg:1/5">User Count</th>
+                <th className="p-4 w-1/3 lg:1/5"></th>
+              </tr>
+            </thead>
+            <tbody className="flex flex-col items-center justify-between overflow-y-scroll w-full h-56 md:h-96 lg:h-80">
+              {
+                roomList.map(room => (
+                  <tr key={room.roomId} className="flex w-full">
+                    <td className="p-2 lg:p-4 w-2/3 lg:w-3/5">{room.roomId}</td>
+                    <td className="hidden md:block lg:flex p-4 w-1/3 lg:1/5">{room.userCount}</td>
+                    <td className="bg-main lg:p-4 w-1/3 lg:1/5 justify-center border-t hover:bg-main-900" onClick={() => handleJoinRoom(room.roomId)} role="button">
+                      <span className="text-white font-bold">Join Room</span>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        }
+      </div>
+
+      <footer className="absolute bottom-10 lg:bottom-20 width w-full flex justify-center">
         <Link href="/welcome">
-          <button>Back to start</button>
+          <button>Back</button>
         </Link>
       </footer>
-    </div>
+    </>
   )
 }

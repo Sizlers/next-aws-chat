@@ -13,6 +13,7 @@
     "react": "17.0.1",
     "react-beforeunload-component": "^1.2.3",
     "react-dom": "17.0.1",
+    "react-icons": "^4.2.0",
     "sass": "^1.32.8"
   },
   "devDependencies": {
