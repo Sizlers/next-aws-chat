@@ -5,6 +5,7 @@ import Router from 'next/router';
 import { DataStore } from '@aws-amplify/datastore';
 import { Room, User } from '../../models';
 import Link from 'next/link';
+import Loading from '../../components/Loading';
 
 export default function JoinRoom() {
   const {username, setUsername} = useContext(UserContext);
@@ -13,10 +14,13 @@ export default function JoinRoom() {
   });
   const [error, setError] = useState('');
   const [roomList, setRoomList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const handleJoinRoom = async (roomId) => {
     try {
+      setLoading(true);
       const room = await DataStore.query(Room, (r) => r.id('eq', roomId));
       if(room.length === 0) {
+        setLoading(false);
         setError('Room not found, please enter another room id, or create a room.');
       } else {
         Router.push(`/rooms/${roomId}`)
@@ -55,6 +59,7 @@ export default function JoinRoom() {
 
   return (
     <>
+      {loading && <Loading />}
       <div className="mb-10 px-5 xl:px-0 max-w-screen-xl m-auto lg:mb-20">
         <h1 className="mt-12 mb-6 lg:mt-20 lg:mb-10">Join a Room</h1>
         <fieldset>

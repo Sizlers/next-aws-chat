@@ -1,5 +1,5 @@
 import { DataStore, withSSRContext } from 'aws-amplify';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Room, Message, User } from '../../models';
 import { UserContext } from '../../utils/UserContext';
 import Link from 'next/link'
@@ -60,11 +60,16 @@ export default function RoomComponent({room}) {
     e.returnValue = false;
  }
 
- const handleBeforeWindowClose = async (e) => {
-  await beforeLeaveRoom();
-  e.preventDefault();
-  e.returnValue = false;
-}
+  const handleBeforeWindowClose = async (e) => {
+    await beforeLeaveRoom();
+    e.preventDefault();
+    e.returnValue = false;
+  }
+
+  const messagesEndRef = useRef(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
 
   useEffect(() => {
     window.addEventListener("beforeunload", handleBeforeWindowClose); 
@@ -75,6 +80,7 @@ export default function RoomComponent({room}) {
     const fetchMessages = async () => {
       const messageData = await DataStore.query(Message, (m) => m.roomID('eq', room.id)); 
       setMessages(messageData);
+      scrollToBottom();
     }
 
     const fetchUsers = async () => {
@@ -123,7 +129,7 @@ export default function RoomComponent({room}) {
         new Message({
           "content": message,
           "roomID": room.id,
-          "author": username,
+          "author": username !== '' ? username : 'Anom',
           "timestamp": Date.now()
         })
       ); 
@@ -165,7 +171,7 @@ export default function RoomComponent({room}) {
               <li key={message.id} className="bg-gray-100 my-4 pt-4 px-6 border-b">
                 <div>
                   <h6 className="text-main font-black"> 
-                    {message.author !== null ? message.author : "Anom"} <span className="font-medium text-xs"> - {new Date(message.timestamp).toISOString().slice(0, 19).replace('T', ' ')}</span>
+                    {message.author !== null || message.author !== '' ? message.author : "Anom"} <span className="font-medium text-xs"> - {new Date(message.timestamp).toISOString().slice(0, 19).replace('T', ' ')}</span>
                   </h6>
                   <div className="p-4 my-2 bg-white">
                     {message.content}
@@ -174,6 +180,7 @@ export default function RoomComponent({room}) {
               </li>
             ))
           }
+          <li ref={messagesEndRef}></li>
         </ul>
         <div className="flex-shrink flex">
           

@@ -4,10 +4,12 @@ import { UserContext } from "../utils/UserContext";
 import Link from 'next/link';
 import { DataStore } from '@aws-amplify/datastore';
 import { Room } from '../models';
+import Loading from '../components/Loading';
 
 export default function Welcome() {  
   const {username, setUsername} = useContext(UserContext);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleBackToStart = () => {
     setUsername('');
@@ -16,6 +18,7 @@ export default function Welcome() {
 
   const handleCreateRoom = async (e) => {
     try {
+      setLoading(true);
       const room = await DataStore.save(
         new Room({
           "Messages": []
@@ -23,6 +26,7 @@ export default function Welcome() {
       );
       Router.push(`/rooms/${room.id}`)  
     } catch(err) {
+      setLoading(false);
       setError(`An error has occurred, please try again. ${err}`)
     }
   }
@@ -35,6 +39,7 @@ export default function Welcome() {
 
   return (
     <>
+      {loading && <Loading />}
       <main className="min-h-screen">
         <div className="pt-20">
           <h1 className="text-center">Hi, {username} <br />do you want to...</h1>
